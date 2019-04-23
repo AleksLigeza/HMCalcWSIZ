@@ -1,1 +1,104 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    margin: 10px;
+    /* background-color: #3b4958; */
+    background-image: url("./Background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 30px;
+    text-align: center;
+    color: aliceblue;
+    padding-top: 4.5rem;
+  }
+
+.btn-selected {
+    border: 8px solid gold !important;
+    margin: 10px 0px 10px 0px;
+}
+
+.btn-bold {
+    margin: 20px 0px 20px 0px;
+    height: 60px;
+}
+
+h2 {
+    margin-top: 5px;
+    margin-left: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 30px;
+    color: aliceblue !important;
+}
+
+.form-box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.form-top {
+    overflow: hidden;
+    padding: 0 25px 15px 25px;    
+    background-color: hsl(211, 26%, 23%);
+    border-radius: 20px 20px 0px 0px;
+    text-align: left;
+}
+
+.form-top-simple {
+    overflow: hidden;
+    padding: 10px;
+    background-color: hsl(211, 26%, 23%);
+    border-radius: 20px 20px 0px 0px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.form-top-left {
+    float: left;
+    width: 75%;
+    padding-top: 15px;
+}
+
+.form-top-right {
+    float: left;
+    width: 25%;
+    padding-top: 10px;
+    font-size: 2.2rem;
+    line-height: 50px;
+    text-align: right;
+}
+
+.form-bottom {
+    padding: 20px 25px;
+    background-color: #304152;
+    border-radius: 0 0 20px 20px;
+    text-align: left;
+}
+
+.form-bottom form textarea {
+    height: 100px;
+}
+
+.form-bottom form button.btn {
+    width: 100%;
+}
+
+.form-bottom form .input-group input {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+h3 b {
+    font-size: 1.5rem !important;
+    color: aliceblue;
+}
+h4 b {
+    font-size: 1.4rem !important;
+}
+
+.bg-dark {
+    background-color: hsl(209, 26%, 17%) !important;
+}
