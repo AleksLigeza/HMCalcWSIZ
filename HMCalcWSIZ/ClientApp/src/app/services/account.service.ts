@@ -13,7 +13,7 @@ export class AccountService {
     private http: HttpClient,
     private alertService: AlertService,
     @Inject('BASE_URL') private baseUrl: string) {
-    this.path = baseUrl + 'account/';
+    this.path = baseUrl + '/account/';
   }
 
   changeEmail(email: string) {
@@ -33,7 +33,7 @@ export class AccountService {
   }
 
   getAllUsers() {
-    return this.http.get<any>(this.path + 'getAllUsers');
+    return this.http.get<any>(this.baseUrl + 'users/getAllUsers');
   }
 
   updateUser(user: User) {

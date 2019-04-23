@@ -1,10 +1,19 @@
+using FluentValidation.AspNetCore;
+using HMCalcWSIZ.Infrastructure.Context;
+using HMCalcWSIZ.Infrastructure.Services.Abstract;
+using HMCalcWSIZ.Infrastructure.Services.Concrete;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace HMCalcWSIZ
 {
@@ -17,23 +26,50 @@ namespace HMCalcWSIZ
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
-            // In production, the Angular files will be served from this directory
+            //----- miejsce zarezerwowane dla Paw³a S. -----
+            // 
+            // dej mie tu jakiœ ³adny kod do identity
+            // ale taki dobry, ¿eby dzia³a³
+            //
+            // ---------------------------------------------
+
+            services.AddMediatR();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v0.1", new Info { Title = "HMCalc-WSIZ", Version = "v0.1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Startup>());
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddTransient<IBus, Bus>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v0.1/swagger.json", "HMCalc-WSIZ v0.1");
+                });
+
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -50,7 +86,7 @@ namespace HMCalcWSIZ
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    template: "api/{controller}/{action}/{id?}");
             });
 
             app.UseSpa(spa =>

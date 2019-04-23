@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMCalcWSIZ", "HMCalcWSIZ\HMCalcWSIZ.csproj", "{8A69680A-9D52-4895-9BBE-8C09B4B8A014}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HMCalcWSIZ", "HMCalcWSIZ\HMCalcWSIZ.csproj", "{8A69680A-9D52-4895-9BBE-8C09B4B8A014}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HMCalcWSIZ.Infrastructure", "HMCalcWSIZ.Infrastructure\HMCalcWSIZ.Infrastructure.csproj", "{4BF2F8B2-E4CA-4D7A-85E0-DD97569BB07A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMCalcWSIZ.Core", "HMCalcWSIZ.Core\HMCalcWSIZ.Core.csproj", "{8D1B13F5-4603-4A38-A169-7C77F9544B99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{8A69680A-9D52-4895-9BBE-8C09B4B8A014}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A69680A-9D52-4895-9BBE-8C09B4B8A014}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A69680A-9D52-4895-9BBE-8C09B4B8A014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BF2F8B2-E4CA-4D7A-85E0-DD97569BB07A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF2F8B2-E4CA-4D7A-85E0-DD97569BB07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF2F8B2-E4CA-4D7A-85E0-DD97569BB07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF2F8B2-E4CA-4D7A-85E0-DD97569BB07A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D1B13F5-4603-4A38-A169-7C77F9544B99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D1B13F5-4603-4A38-A169-7C77F9544B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D1B13F5-4603-4A38-A169-7C77F9544B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D1B13F5-4603-4A38-A169-7C77F9544B99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
