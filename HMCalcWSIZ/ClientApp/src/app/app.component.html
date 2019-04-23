@@ -1,10 +1,36 @@
-<div class='container-fluid'>
-  <div class='row'>
-    <div class='col-sm-3'>
-      <app-nav-menu></app-nav-menu>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" routerLink="/">HomeCalc</a>
+    <button #navbarToggler class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" *ngIf="isAuthenticated">
+                <a class="nav-link" routerLink="/dashboard" (click)="collapseNav()">Panel</a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated">
+                <a class="nav-link" routerLink="/history" (click)="collapseNav()">Historia</a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated">
+                <a class="nav-link" routerLink="/cycles" (click)="collapseNav()">Operacje zdefiniowane</a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated">
+                <a class="nav-link" routerLink="/settings" (click)="collapseNav()">Konto</a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated">
+                <a class="nav-link" routerLink="/adminUsers" (click)="collapseNav()">Admin</a>
+            </li>
+        </ul>
+        <span class="navbar-text" *ngIf="isAuthenticated">
+            <a class="nav-link" routerLink="" (click)="logOut()" (click)="collapseNav()">Wyloguj</a>
+        </span>
     </div>
-    <div class='col-sm-9 body-content'>
-      <router-outlet></router-outlet>
+</nav>
+<ngx-loading-bar height="50px" color="#f0f8ff" includeSpinner></ngx-loading-bar>
+<div class="container">
+    <div class="text-center">
+        <app-alert></app-alert>
+        <router-outlet></router-outlet>
     </div>
-  </div>
 </div>

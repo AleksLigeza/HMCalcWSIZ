@@ -1,0 +1,90 @@
+<div *ngIf="operation">
+
+    <div class="row justify-content-center">
+        <div class="form-box col-sm-12">
+            <div class="form-top">
+                <div class="form-top-left">
+                    <div *ngIf="operation._id != '0' && operation._id != '-1'">
+                        <h3>
+                            <b>Szczegóły operacji</b>
+                        </h3>
+                    </div>
+
+                    <div *ngIf="operation._id === '-1'">
+                        <h3>
+                            <b>Nowa operacja</b>
+                        </h3>
+                    </div>
+
+                    <div *ngIf="operation._id === '0'">
+                        <h3>
+                            <b>Nowa operacja zdefiniowana</b>
+                        </h3>
+                    </div>
+                </div>
+                <div class="form-top-right">
+                    <i class="fa fa-pencil-alt"></i>
+                </div>
+            </div>
+            <div class="form-bottom">
+                <div class="row justify-content-center">
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <button type="button" class="btn btn-success btn-block btn-bold" [class.btn-selected]="operation.income === true" (click)="onSelectType(true)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-1 d-none d-md-block">
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <button type="button" class="btn btn-danger btn-block btn-bold" [class.btn-selected]="operation.income === false" (click)="onSelectType(false)">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Kwota</span>
+                    </div>
+                    <input type="number" max="999999" min="0" class="form-control" [(ngModel)]="operation.amount">
+                    <div class="input-group-append">
+                        <span class="input-group-text">zł</span>
+                    </div>
+                </div>
+
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Opis</span>
+                    </div>
+                    <input type="text" maxlength="50" class="form-control" [(ngModel)]="operation.description">
+                </div>
+
+                <div class="input-group mb-2" *ngIf="!operation.cyclic">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Data</span>
+                    </div>
+                    <input type="date" class="form-control" [value]="operation.date | date:'yyyy-MM-dd'" (input)="operation.date = $event.target.valueAsDate"
+                    />
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-xs-12 col-sm-4">
+                        <button type="button" class="btn btn-info btn-block" (click)="goBack()">
+                            <i class="fas fa-arrow-left"></i> Powrót</button>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <button type="button" class="btn btn-danger btn-block" (click)="delete()" *ngIf="operation._id !== '-1' && operation._id !== '0'">
+                            <i class="fas fa-trash-alt"></i> Usuń</button>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <button type="button" class="btn btn-success btn-block" (click)="save()">
+                            <i class="fas fa-save"></i> Zapisz</button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="operation.cyclic">
+                <app-operation-list [list]='connectedOperations' [listTitle]="'Powiązane operacje'"> </app-operation-list>
+            </div>
+        </div>
+    </div>
+</div>
