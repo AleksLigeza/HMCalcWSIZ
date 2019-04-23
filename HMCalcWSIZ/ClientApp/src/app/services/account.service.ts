@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AlertService } from './alert.service';
 import { filter } from 'Rxjs/operators/filter';
@@ -7,11 +7,14 @@ import { User } from '../models/user';
 @Injectable()
 export class AccountService {
 
-  constructor( private http: HttpClient,
-    private alertService: AlertService
-  ) { }
+  private path: string;
 
-  path = 'http://localhost/Homecalc-PHPBackEnd/account/';
+  constructor(
+    private http: HttpClient,
+    private alertService: AlertService,
+    @Inject('BASE_URL') private baseUrl: string) {
+    this.path = baseUrl + 'account/';
+  }
 
   changeEmail(email: string) {
     const temp = {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Operation } from '../models/operation';
 import { HistoryFilters } from '../models/historyFilters';
 import { HttpClient } from '@angular/common/http';
@@ -7,10 +7,13 @@ import { AlertService } from './alert.service';
 @Injectable()
 export class OperationsService {
 
-  constructor( private http: HttpClient,
-    private alertService: AlertService) { }
+  private path: string;
 
-  path = 'http://localhost/Homecalc-PHPBackEnd/operations/';
+  constructor(private http: HttpClient,
+    private alertService: AlertService,
+    @Inject('BASE_URL') private baseUrl: string) {
+    this.path = baseUrl + 'operations/';
+  }
 
   getSummary() {
     return this.http.get<any>(this.path + 'summary');

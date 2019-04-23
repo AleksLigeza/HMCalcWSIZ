@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { AccountSummary } from '../models/accountSummary';
 import { Operation } from '../models/operation';
 import { LoginData, RegisterData } from '../models/login';
@@ -11,13 +11,15 @@ import { AlertService } from './alert.service';
 @Injectable()
 export class AuthService {
 
+  private path: string;
+  private TOKEN_KEY: string = 'token';
+  
   constructor(private http: HttpClient,
     public router: Router,
-    private alertService: AlertService) { }
-
-  // path = 'http://localhost:3000/auth';
-  path = 'http://localhost/Homecalc-PHPBackEnd/auth';
-  TOKEN_KEY = 'token';
+    private alertService: AlertService,
+    @Inject('BASE_URL') private baseUrl: string) {
+    this.path = baseUrl + 'auth/';
+  }
 
   get token() {
     return localStorage.getItem(this.TOKEN_KEY);
