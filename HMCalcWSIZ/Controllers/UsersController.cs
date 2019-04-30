@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using HMCalcWSIZ.Infrastructure.Features.Commands.RegisterUserCommand;
 using HMCalcWSIZ.Infrastructure.Features.Queries.GetUsersQuery;
+using HMCalcWSIZ.Infrastructure.Features.Commands.DeleteUserCommand;
 
 namespace HMCalcWSIZ.Controllers
 {
@@ -27,13 +28,14 @@ namespace HMCalcWSIZ.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
-            await bus.Run<RegisterUserCommand>(command);
+            await bus.Run(command);
             return Accepted();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete()
+        public async Task<IActionResult> Delete([FromBody] DeleteUserCommand command)
         {
+            await bus.Run(command);
             return Accepted();
         }
 

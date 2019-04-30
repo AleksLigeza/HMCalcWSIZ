@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using HMCalcWSIZ.Core.Domain;
 using HMCalcWSIZ.Infrastructure.Context;
 using MediatR;
 
@@ -17,7 +18,14 @@ namespace HMCalcWSIZ.Infrastructure.Features.Commands.DeleteUserCommand
 
         public Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = new AppUser
+            {
+                Id = request.Id
+            };
+
+            appDbContext.Users.Remove(user);
+            appDbContext.SaveChanges();
+            return Unit.Task;
         }
     }
 }
