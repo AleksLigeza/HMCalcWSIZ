@@ -1,5 +1,5 @@
 export class User {
-    user_id: number;
+    id: string;
     email: string;
     password: string;
 
@@ -7,7 +7,7 @@ export class User {
         const temp = new User();
         temp.email = pattern.email;
         temp.password = pattern.password;
-        temp.user_id = pattern.user_id;
+        temp.id = pattern.id;
         return temp;
     }
 }

@@ -14,6 +14,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
+using HMCalcWSIZ.Core.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace HMCalcWSIZ
 {
@@ -31,12 +33,8 @@ namespace HMCalcWSIZ
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
-            //----- miejsce zarezerwowane dla Paw³a S. -----
-            // 
-            // dej mie tu jakiœ ³adny kod do identity
-            // ale taki dobry, ¿eby dzia³a³
-            //
-            // ---------------------------------------------
+            services.AddDefaultIdentity<AppUser>()
+                .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddMediatR();
             services.AddSwaggerGen(c =>
@@ -78,6 +76,7 @@ namespace HMCalcWSIZ
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using HMCalcWSIZ.Infrastructure.Features.Commands.RegisterUserCommand;
 using HMCalcWSIZ.Infrastructure.Features.Queries.GetUsersQuery;
 using HMCalcWSIZ.Infrastructure.Features.Commands.DeleteUserCommand;
+using HMCalcWSIZ.Infrastructure.Features.Commands.UpdateUserCommand;
 
 namespace HMCalcWSIZ.Controllers
 {
+    [Route("api/auth")]
     public class UsersController : Controller
     {
         private readonly IBus bus;
@@ -32,12 +34,18 @@ namespace HMCalcWSIZ.Controllers
             return Accepted();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteUserCommand command)
+        [HttpPut("updateUser")]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {
             await bus.Run(command);
             return Accepted();
         }
 
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await bus.Run(new DeleteUserCommand { Id = id });
+            return Accepted();
+        }
     }
 }
