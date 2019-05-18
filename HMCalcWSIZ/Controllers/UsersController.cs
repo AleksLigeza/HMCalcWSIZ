@@ -3,10 +3,12 @@ using HMCalcWSIZ.Core.DTO;
 using HMCalcWSIZ.Infrastructure.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using HMCalcWSIZ.Core.Domain;
 using HMCalcWSIZ.Infrastructure.Features.Commands.RegisterUserCommand;
 using HMCalcWSIZ.Infrastructure.Features.Queries.GetUsersQuery;
 using HMCalcWSIZ.Infrastructure.Features.Commands.DeleteUserCommand;
 using HMCalcWSIZ.Infrastructure.Features.Commands.UpdateUserCommand;
+using HMCalcWSIZ.Infrastructure.Features.Queries.GetJwtQuery;
 
 namespace HMCalcWSIZ.Controllers
 {
@@ -32,6 +34,13 @@ namespace HMCalcWSIZ.Controllers
         {
             await bus.Run(command);
             return Accepted();
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> GetToken([FromBody] GetJwtQuery query)
+        {
+            var response = await bus.Run<GetJwtQuery, AuthData>(query);
+            return Ok(response);
         }
 
         [HttpPut("updateUser")]

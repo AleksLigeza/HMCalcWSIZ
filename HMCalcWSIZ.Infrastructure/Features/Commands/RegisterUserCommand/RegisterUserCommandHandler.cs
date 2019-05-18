@@ -12,11 +12,11 @@ namespace HMCalcWSIZ.Infrastructure.Features.Commands.RegisterUserCommand
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand>
     {
-        private readonly UserManager<AppUser> userStore;
+        private readonly UserManager<AppUser> userManager;
 
         public RegisterUserCommandHandler(UserManager<AppUser> userStore)
         {
-            this.userStore = userStore;
+            this.userManager = userStore;
         }
 
         public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -29,7 +29,7 @@ namespace HMCalcWSIZ.Infrastructure.Features.Commands.RegisterUserCommand
                 NormalizedEmail = request.Email.ToUpper(),
             };
 
-            var result = await userStore.CreateAsync(user, request.Password);
+            var result = await userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
             {
                 throw new ApplicationException(result.Errors.Select(x => x.Description).Join());
