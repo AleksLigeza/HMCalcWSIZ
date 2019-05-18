@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   logIn(loginData: LoginData) {
-    this.http.post(this.path + '/login',
+    this.http.post(this.path + 'login',
       {
         email: loginData.email,
         password: loginData.password
@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   register(registerData: RegisterData) {
-    return this.http.post(this.path + '/register',
+    return this.http.post(this.path + 'register',
       {
         email: registerData.email,
         password: registerData.password

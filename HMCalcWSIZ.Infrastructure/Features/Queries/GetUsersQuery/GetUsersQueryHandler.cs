@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using HMCalcWSIZ.Core.DTO;
@@ -9,7 +7,7 @@ using HMCalcWSIZ.Infrastructure.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace HMCalcWSIZ.Infrastructure.Features.GetSomethingQuery
+namespace HMCalcWSIZ.Infrastructure.Features.Queries.GetUsersQuery
 {
     public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, List<UserDto>>
     {

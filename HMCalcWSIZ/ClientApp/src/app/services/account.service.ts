@@ -23,7 +23,7 @@ export class AccountService {
 
     return this.http.put(this.path + 'changeEmail', temp);
   }
-
+  //Wyjebie te dwie metody, nie widzę sensu aby istniały jak jest na dole updateUser
   changePassword(password: string) {
     const temp = {
       password: password,
@@ -38,14 +38,14 @@ export class AccountService {
 
   updateUser(user: User) {
     const temp = {
-      id: user.user_id,
+      id: user.id,
       email: user.email,
       password: user.password,
     };
     return this.http.put<any>(this.path + 'updateUser', temp);
   }
 
-  deleteUser(id: Number) {
-    return this.http.delete<any>(this.path + 'delete/' + id.toString());
+  deleteUser(id: string) {
+    return this.http.delete<any>(this.path + 'delete/' + id);
   }
 }
