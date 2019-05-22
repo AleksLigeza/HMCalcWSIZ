@@ -55,10 +55,11 @@ export class AuthService {
         email: registerData.email,
         password: registerData.password
       }).subscribe(res => {
-        this.saveToken(res['token']);
-        if (this.token === 'undefined') {
-          this.saveToken(res);
-        }
+        // this.saveToken(res['token']);
+        // if (this.token === 'undefined') {
+        //   this.saveToken(res);
+        // }
+        // jak się zrobi JWT to wtedy się zmieni
         this.router.navigate(['/dashboard']);
       },
         err => {
@@ -73,6 +74,7 @@ export class AuthService {
   }
 
   saveToken(token) {
+    console.log(token);
     localStorage.setItem(this.TOKEN_KEY, token);
   }
 }
