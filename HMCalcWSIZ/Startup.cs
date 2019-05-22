@@ -16,6 +16,11 @@ using System.IO;
 using System.Reflection;
 using HMCalcWSIZ.Core.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using HMCalcWSIZ.Infrastructure.Models;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 
 namespace HMCalcWSIZ
 {
@@ -33,7 +38,7 @@ namespace HMCalcWSIZ
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<AppUser>()
+            services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddMediatR();
@@ -54,8 +59,12 @@ namespace HMCalcWSIZ
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
+            AddJwt(services);
             services.AddTransient<IBus, Bus>();
+            services.AddTransient<IJwtService, JwtService>();
+            //services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+            //services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+            //services.AddTransient<RoleManager<IdentityRole>, RoleManager<IdentityRole>>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -100,6 +109,46 @@ namespace HMCalcWSIZ
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
+            });
+        }
+
+        private void AddJwt(IServiceCollection services)
+        {
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var secretKey = Configuration.GetSection("secretKey").Value;
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+
+            services.Configure<JwtIssuerOptions>(o =>
+            {
+                o.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                o.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                o.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            });
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                o.TokenValidationParameters = tokenValidationParameters;
+                o.SaveToken = true;
             });
         }
     }
