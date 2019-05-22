@@ -53,22 +53,22 @@ export class OperationDetailsComponent implements OnInit {
     }
 
     if (id === 'new' || id === 'newCycle') {
-      this.operation = new Operation(id);
+      this.operation = new Operation(0);
 
       if (id === 'newCycle') {
-        this.operation.cyclic = true;
-        this.operation._id = '0';
+        this.operation.isCycle = true;
+        this.operation._id = 0;
       } else {
-        this.operation._id = '-1';
+        this.operation._id = -1;
       }
     } else {
       this.operationsService.getDetails(id).subscribe(
         res => {
           this.operation = res;
-          Operation.normalize(this.operation, res.income, res.id);
+          Operation.normalize(this.operation, res.isIncome, res.id);
           this.loadedId = id;
-          if (res['cycleId'] === '0') {
-            this.operation.cyclic = true;
+
+          if (this.operation.isCycle) {
             this.getCycleOperations(this.operation._id);
           }
         },
@@ -113,10 +113,10 @@ export class OperationDetailsComponent implements OnInit {
   }
 
   onSelectType(type: boolean): void {
-    this.operation.income = type;
+    this.operation.isIncome = type;
   }
 
-  getCycleOperations(id: string) {
+  getCycleOperations(id: number) {
     this.operationsService.getCycleOperations(this.operation._id).subscribe(
       res => {
         this.connectedOperations = Operation.createArray(res);

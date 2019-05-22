@@ -55,7 +55,7 @@ export class CycleMenuComponent implements OnInit {
 
   enableCycleProperty() {
     this.cycles.forEach(element => {
-      element.cyclic = true;
+      element.isCycle = true;
     });
   }
 }

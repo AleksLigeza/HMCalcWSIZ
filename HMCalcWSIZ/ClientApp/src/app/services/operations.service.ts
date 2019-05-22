@@ -35,22 +35,22 @@ export class OperationsService {
     dateSince.setUTCHours(0, 0, 0, 0);
     dateTo.setUTCHours(24, 0, 0, 0);
 
-    const filtersPath = records + '/' +
-        filters.amountFrom + '/' +
-        filters.amountTo + '/' +
-        tempDesc + '/' +
-        dateSince.toISOString() + '/' +
-        dateTo.toISOString() + '/' +
-        filters.type + '/';
+    const filtersPath = '?Skip=' + records +
+    '&AmountFrom=' + filters.amountFrom +
+        '&AmountTo=' + filters.amountTo +
+        '&Description=' + tempDesc +
+        '&DateFrom=' + dateSince.toISOString() +
+        '&DateTo=' + dateTo.toISOString() +
+        '&IsIncome=' + filters.type.toString();
 
-    return this.http.get<any>(this.path + 'historyWithFilters/' + filtersPath);
+    return this.http.get<any>(this.path + 'history' + filtersPath);
   }
 
   getDetails(id: string) {
-    return this.http.get<any>(this.path + 'details/' + id);
+    return this.http.get<any>(this.path + 'operation/' + id);
   }
 
-  getCycleOperations(id: string) {
+  getCycleOperations(id: number) {
     return this.http.get<any>(this.path + 'cycle/' + id);
   }
 
@@ -59,7 +59,7 @@ export class OperationsService {
   }
 
   createUpdateOperation(operation: Operation) {
-    if (operation._id === '-1' || operation._id === '0') {
+    if (operation._id === -1 || operation._id === 0) {
       return this.createOperation(operation);
     } else {
       return this.updateOperation(operation);
@@ -67,33 +67,34 @@ export class OperationsService {
   }
 
   createOperation(operation: Operation) {
-    operation.date.setUTCHours(12, 0, 0, 0);
+    operation.operationDate.setUTCHours(12, 0, 0, 0);
     const tempOperation = {
       id: 0,
-      date: operation.date.toISOString(),
-      income: operation.income,
+      operationDate: operation.operationDate.toISOString(),
+      isIncome: operation.isIncome,
       amount: operation.amount,
       description: operation.description,
-      cycleId: operation._id,
+      isCycle: operation.isCycle,
+      cycleId: operation.cycleId
     };
 
-    return this.http.post(this.path + 'create', tempOperation);
+    return this.http.post(this.path + 'operation', tempOperation);
   }
 
   updateOperation(operation: Operation) {
     const tempOperation = {
       id: operation._id,
-      date: operation.date,
-      income: operation.income,
+      operationDate: operation.operationDate,
+      isIncome: operation.isIncome,
       amount: operation.amount,
       description: operation.description
     };
 
-    return this.http.put(this.path + 'update', tempOperation);
+    return this.http.put(this.path + 'operation', tempOperation);
   }
 
-  deleteOperation(id: string) {
-    return this.http.delete<any>(this.path + 'delete/' + id);
+  deleteOperation(id: number) {
+    return this.http.delete<any>(this.path + 'operation/' + id);
   }
 
 }

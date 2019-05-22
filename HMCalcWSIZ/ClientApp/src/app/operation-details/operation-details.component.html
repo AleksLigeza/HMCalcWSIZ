@@ -29,14 +29,14 @@
             <div class="form-bottom">
                 <div class="row justify-content-center">
                     <div class="col-6 col-md-4 col-lg-3">
-                        <button type="button" class="btn btn-success btn-block btn-bold" [class.btn-selected]="operation.income === true" (click)="onSelectType(true)">
+                        <button type="button" class="btn btn-success btn-block btn-bold" [class.btn-selected]="operation.isIncome === true" (click)="onSelectType(true)">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
                     <div class="col-md-1 d-none d-md-block">
                     </div>
                     <div class="col-6 col-md-4 col-lg-3">
-                        <button type="button" class="btn btn-danger btn-block btn-bold" [class.btn-selected]="operation.income === false" (click)="onSelectType(false)">
+                        <button type="button" class="btn btn-danger btn-block btn-bold" [class.btn-selected]="operation.isIncome === false" (click)="onSelectType(false)">
                             <i class="fas fa-minus"></i>
                         </button>
                     </div>
@@ -59,11 +59,11 @@
                     <input type="text" maxlength="50" class="form-control" [(ngModel)]="operation.description">
                 </div>
 
-                <div class="input-group mb-2" *ngIf="!operation.cyclic">
+                <div class="input-group mb-2" *ngIf="!operation.isCycle">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Data</span>
                     </div>
-                    <input type="date" class="form-control" [value]="operation.date | date:'yyyy-MM-dd'" (input)="operation.date = $event.target.valueAsDate"
+                    <input type="date" class="form-control" [value]="operation.operationDate | date:'yyyy-MM-dd'" (input)="operation.operationDate = $event.target.valueAsDate"
                     />
                 </div>
 
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="operation.cyclic">
+            <div *ngIf="operation.isCycle">
                 <app-operation-list [list]='connectedOperations' [listTitle]="'Powiązane operacje'"> </app-operation-list>
             </div>
         </div>

@@ -15,6 +15,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using HMCalcWSIZ.Core.Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace HMCalcWSIZ
@@ -34,6 +35,7 @@ namespace HMCalcWSIZ
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<AppUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddMediatR();
@@ -56,6 +58,7 @@ namespace HMCalcWSIZ
             });
 
             services.AddTransient<IBus, Bus>();
+            services.AddTransient<IJwtService, JwtService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

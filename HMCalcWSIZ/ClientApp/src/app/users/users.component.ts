@@ -26,11 +26,11 @@ export class UsersComponent implements OnInit {
     this.getAllUsers();
   }
 
-  showUserDetails(id: number) {
-    this.details = User.copy(this.list.filter( user => user.user_id === id )[0]);
+  showUserDetails(id: string) {
+    this.details = User.copy(this.list.filter( user => user.id === id )[0]);
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     this.accountService.deleteUser(id).subscribe(
       res => {
         this.initialize();

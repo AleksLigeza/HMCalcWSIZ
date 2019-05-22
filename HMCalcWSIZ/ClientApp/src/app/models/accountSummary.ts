@@ -1,9 +1,9 @@
 export class AccountSummary {
     amount: number;
     bills: number;
-    income: number;
+    incomes: number;
     lastMonthBills: number;
-    lastMonthIncome: number;
+    lastMonthIncomes: number;
 }
 
 export class AccountSummaryDiffrence {
@@ -13,17 +13,17 @@ export class AccountSummaryDiffrence {
     billsPercent: number;
 
     constructor(summary: AccountSummary) {
-        this.overall = summary.income - summary.bills;
-        this.overallLast = summary.lastMonthIncome - summary.lastMonthBills;
+        this.overall = summary.incomes - summary.bills;
+        this.overallLast = summary.lastMonthIncomes - summary.lastMonthBills;
 
-        if (summary.lastMonthIncome === 0) {
-            if (summary.income > 0) {
+        if (summary.lastMonthIncomes === 0) {
+            if (summary.incomes > 0) {
                 this.incomePercent = 100;
             } else {
                 this.incomePercent = 0;
             }
         } else {
-            this.incomePercent = (summary.income - summary.lastMonthIncome) / summary.lastMonthIncome * 100;
+            this.incomePercent = (summary.incomes - summary.lastMonthIncomes) / summary.lastMonthIncomes * 100;
         }
 
         if (summary.lastMonthBills === 0) {

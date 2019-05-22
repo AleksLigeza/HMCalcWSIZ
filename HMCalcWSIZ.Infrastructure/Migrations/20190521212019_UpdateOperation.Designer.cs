@@ -4,14 +4,16 @@ using HMCalcWSIZ.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HMCalcWSIZ.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190521212019_UpdateOperation")]
+    partial class UpdateOperation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,11 +82,7 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreationDate");
 
-                    b.Property<int?>("CycleId");
-
                     b.Property<string>("Description");
-
-                    b.Property<bool>("IsCycle");
 
                     b.Property<bool>("IsIncome");
 
@@ -93,8 +91,6 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CycleId");
 
                     b.HasIndex("UserId");
 
@@ -125,7 +121,7 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "86c9dc67-6bdf-40b9-9bb5-30daac4d16f2", ConcurrencyStamp = "142509ee-05bd-484b-a72f-3147e54096ec", Name = "Admin", NormalizedName = "ADMIN" }
+                        new { Id = "1d485f46-6d62-47e6-aa3c-a6ae670ac915", ConcurrencyStamp = "8773591b-a797-4188-8fdc-757711bb0d25", Name = "Admin", NormalizedName = "ADMIN" }
                     );
                 });
 
@@ -221,10 +217,6 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
 
             modelBuilder.Entity("HMCalcWSIZ.Core.Domain.Operation", b =>
                 {
-                    b.HasOne("HMCalcWSIZ.Core.Domain.Operation", "Cycle")
-                        .WithMany()
-                        .HasForeignKey("CycleId");
-
                     b.HasOne("HMCalcWSIZ.Core.Domain.AppUser", "User")
                         .WithMany("Operations")
                         .HasForeignKey("UserId");

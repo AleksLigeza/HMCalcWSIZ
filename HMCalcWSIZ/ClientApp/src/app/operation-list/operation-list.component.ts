@@ -54,7 +54,8 @@ export class OperationListComponent implements OnInit {
     const newOperation = new Operation(operation._id);
     newOperation.amount = operation.amount;
     newOperation.description = operation.description;
-    newOperation.income = operation.income;
+    newOperation.isIncome = operation.isIncome;
+    newOperation.cycleId = operation._id;
 
     this.operationsService.createOperation(newOperation).subscribe(res => {
       this.alertService.success('Operacja zapisana', true);

@@ -74,13 +74,13 @@
         </div>
         <div class="btn-group btn-group-toggle col-12 col-sm-10 row buttons" data-toggle="buttons">
           <label class="btn btn-dark active col-4 typeOption" (click)="changeType(0)">
-            <input type="radio" name="typeOptions" ng-control="options" [value]="0" [(ngModel)]="filters.type" autocomplete="off" checked> Razem
+            <input type="radio" name="typeOptions" ng-control="options" [value]="All" [(ngModel)]="filters.type" autocomplete="off" checked> Razem
           </label>
           <label class="btn btn-dark col-4 typeOption"(click)="changeType(1)">
-            <input type="radio" name="typeOptions" ng-control="options" [value]="1" [(ngModel)]="filters.type" autocomplete="off"> Zarobek
+            <input type="radio" name="typeOptions" ng-control="options" [value]="Income" [(ngModel)]="filters.type" autocomplete="off"> Zarobek
           </label>
           <label class="btn btn-dark col-4 typeOption" (click)="changeType(2)">
-            <input type="radio" name="typeOptions" ng-control="options" [value]="2" [(ngModel)]="filters.type" autocomplete="off"> Wydatek
+            <input type="radio" name="typeOptions" ng-control="options" [value]="Bill" [(ngModel)]="filters.type" autocomplete="off"> Wydatek
           </label>
         </div>
       </div>

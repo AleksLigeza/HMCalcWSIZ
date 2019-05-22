@@ -23,7 +23,7 @@
                 </h5>
                 <h6 class="mb-3">
                   <div>
-                    {{ summary.income | currency:'PLN':'1.2-2' }} |
+                    {{ summary.incomes | currency:'PLN':'1.2-2' }} |
 
                     <div class="amount" [ngClass]="{'profit': (diffrence.incomePercent >= 0),
             'loss': (diffrence.incomePercent < 0)}">
@@ -76,7 +76,7 @@
                   Zarobki
                 </h5>
                 <h6 class="mb-3">
-                  {{ summary.lastMonthIncome | currency:'PLN':'1.2-2' }}
+                  {{ summary.lastMonthIncomes | currency:'PLN':'1.2-2' }}
                 </h6>
               </div>
             </div>

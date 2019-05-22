@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HMCalcWSIZ.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190423164827_Init")]
-    partial class Init
+    [Migration("20190521203927_AddOperations")]
+    partial class AddOperations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("HMCalcWSIZ.Infrastructure.Domain.AppUser", b =>
+            modelBuilder.Entity("HMCalcWSIZ.Core.Domain.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -72,6 +72,29 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("HMCalcWSIZ.Core.Domain.Operation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("OperationDate");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Operations");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -96,7 +119,7 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "a42538e2-bbda-4adc-9a53-733afcdb552d", ConcurrencyStamp = "0e10d558-d9e7-41fe-a387-03cfb9d7c319", Name = "Admin", NormalizedName = "ADMIN" }
+                        new { Id = "353648b6-0b9e-4eb5-804e-5153f96b2c73", ConcurrencyStamp = "34d1f40e-82fc-4046-a9f3-75b1e1f74ad1", Name = "Admin", NormalizedName = "ADMIN" }
                     );
                 });
 
@@ -142,9 +165,11 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -175,15 +200,24 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("HMCalcWSIZ.Core.Domain.Operation", b =>
+                {
+                    b.HasOne("HMCalcWSIZ.Core.Domain.AppUser", "User")
+                        .WithMany("Operations")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -196,7 +230,7 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("HMCalcWSIZ.Infrastructure.Domain.AppUser")
+                    b.HasOne("HMCalcWSIZ.Core.Domain.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -204,7 +238,7 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("HMCalcWSIZ.Infrastructure.Domain.AppUser")
+                    b.HasOne("HMCalcWSIZ.Core.Domain.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -217,7 +251,7 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("HMCalcWSIZ.Infrastructure.Domain.AppUser")
+                    b.HasOne("HMCalcWSIZ.Core.Domain.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -225,7 +259,7 @@ namespace HMCalcWSIZ.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("HMCalcWSIZ.Infrastructure.Domain.AppUser")
+                    b.HasOne("HMCalcWSIZ.Core.Domain.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
