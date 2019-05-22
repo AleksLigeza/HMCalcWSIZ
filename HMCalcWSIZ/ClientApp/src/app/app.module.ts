@@ -24,6 +24,9 @@ import { ErrorComponent } from './error/error.component';
 import { OperationsService } from './services/operations.service';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { UsersComponent } from './users/users.component';
+import localePl from '@angular/common/locales/pl';
+import localePlExtra from '@angular/common/locales/extra/pl';
+import { registerLocaleData } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -67,5 +70,6 @@ import { UsersComponent } from './users/users.component';
 })
 export class AppModule {
   constructor( @Inject(LOCALE_ID) locale: string) {
+    registerLocaleData(localePl, 'pl', localePlExtra);
   }
 }

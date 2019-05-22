@@ -7,6 +7,8 @@ namespace HMCalcWSIZ.Infrastructure.Context
 {
     public class AppDbContext : IdentityDbContext<AppUser>
     {
+        public DbSet<Operation> Operations { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {

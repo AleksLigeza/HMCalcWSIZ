@@ -1,19 +1,21 @@
 export class Operation {
-    _id: string;
-    date: Date;
-    income: boolean;
+    _id: number;
+    operationDate: Date;
+    isIncome: boolean;
     amount: number;
     description: string;
-    cyclic: boolean;
+    isCycle: boolean;
+    cycleId: number;
 
-    constructor(id: string) {
+    constructor(id: number) {
         this._id = id;
-        this.date = new Date();
-        this.date.setUTCHours(12);
-        this.income = true;
+        this.operationDate = new Date();
+        this.operationDate.setUTCHours(12);
+        this.isIncome = true;
         this.amount = 1;
         this.description = '';
-        this.cyclic = false;
+        this.isCycle = false;
+        this.cycleId = null;
     }
 
     static createArray(res): Operation[] {
@@ -22,13 +24,13 @@ export class Operation {
         result = res;
 
         result.forEach((value, index) => {
-            Operation.normalize(value, res[index].income, res[index].id);
+            Operation.normalize(value, res[index].isIncome, res[index].id);
         });
         return result;
     }
 
     static normalize(operation: Operation, type, id: number) {
-        operation.income = (type === '1') || (type === true);
-        operation._id = id.toString();
+        operation.isIncome = (type === '1') || (type === true);
+        operation._id = id;
     }
 }

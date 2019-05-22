@@ -15,6 +15,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using HMCalcWSIZ.Core.Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using HMCalcWSIZ.Infrastructure.Models;
@@ -38,7 +39,8 @@ namespace HMCalcWSIZ
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddDefaultIdentity<AppUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddMediatR();
@@ -62,9 +64,6 @@ namespace HMCalcWSIZ
             AddJwt(services);
             services.AddTransient<IBus, Bus>();
             services.AddTransient<IJwtService, JwtService>();
-            //services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
-            //services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
-            //services.AddTransient<RoleManager<IdentityRole>, RoleManager<IdentityRole>>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
