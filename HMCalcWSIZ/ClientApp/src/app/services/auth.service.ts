@@ -55,11 +55,10 @@ export class AuthService {
         email: registerData.email,
         password: registerData.password
       }).subscribe(res => {
-        // this.saveToken(res['token']);
-        // if (this.token === 'undefined') {
-        //   this.saveToken(res);
-        // }
-        // jak się zrobi JWT to wtedy się zmieni
+         this.saveToken(res['token']);
+         if (this.token === 'undefined') {
+           this.saveToken(res);
+         }
         this.router.navigate(['/dashboard']);
       },
         err => {
